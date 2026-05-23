@@ -15,9 +15,6 @@ public class Bombo {
 
     @Override
     public String toString() {
-        for (int i = 1; i<=99; i++) {
-            this.bombo.add(i);
-        }
         return this.bombo.toString();
     }
 }
