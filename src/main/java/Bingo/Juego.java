@@ -18,24 +18,27 @@ public class Juego {
         return carton;
     }
 
+    private boolean nombreYaExiste(ArrayList<Jugador> jugadores, String nombre) {
+        for (Jugador jugador : jugadores) {
+            if (jugador.getNombre().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Jugador> registrarNombresJugadores(int numJugadores) {
         ArrayList<Jugador> jugadores = new ArrayList<>();
-        String nombreAnterior = "";
 
         try (Scanner teclado = new Scanner(System.in)) {
             for (int i = 1; i <= numJugadores; i++) {
                 System.out.print("Nombre del jugador "+i+": ");
                 String nombre = teclado.nextLine();
 
-                while (nombre.isEmpty() || nombre.equals(" ")) {
-                    System.out.print("Por favor, escribe el nombre del jugador "+i+": ");
+                while (nombre.isBlank() || nombreYaExiste(jugadores, nombre)) {
+                    System.out.print("Por favor, escribe un nombre válido para el jugador: "+i+": ");
                     nombre = teclado.nextLine();
                 }
-                while (nombre.equalsIgnoreCase(nombreAnterior)) {
-                    System.out.print("Por favor, escribe otro nombre para el jugador "+i+": ");
-                    nombre = teclado.nextLine();
-                }
-                nombreAnterior = nombre;
                 jugadores.add(new Jugador(nombre, new Carton(prepararCarton())));
             }
         }
